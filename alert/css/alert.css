@@ -1,0 +1,108 @@
+.window_boundingBox{
+	position: fixed;
+	border: 1px solid #eee;
+	box-shadow: 0 0 10px rgba(0,0,0,.5);
+	background: #fefefe;
+}
+.window_alertBtn{
+	width: 100px;
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	margin-left: -50px;
+	outline: none;
+    border: none;
+    line-height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.window_header{
+	background: #333;
+	color: #fff;
+	text-align: center;
+	padding: 5px;
+	font-size: 20px;
+}
+.window_body{
+	padding: 10px;
+	text-align: center;
+}
+.window_footer{
+	text-align: center;
+}
+.window_click{
+	line-height: 30px;
+	display: inline-block;
+	background: #635959;
+	color: #fff;
+	width: 100px;
+	text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    color: #fff;
+    width: 100px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 0 5px #000;
+}
+.window_closeBtn{
+	display: inline-block;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	overflow: hidden;
+	top: 0;
+	right: 0;
+	margin: 5px;
+	cursor: pointer;
+}
+.window_closeBtn::before,.window_closeBtn::after{
+	position: absolute;
+	content: '';
+	top: 50%;
+	left: 0;
+	margin-top: -1px;
+	background: #fff;
+	width: 100%;
+	height: 2px;
+}
+.window_closeBtn::before{
+	transform: rotate(45deg);
+}
+.window_closeBtn::after{
+	transform: rotate(-45deg);
+}
+.window_skin_a.window_boundingBox{
+	position: fixed;
+	border: 1px solid #000;
+	box-shadow: 0 0 15px rgba(250,0,0,.5);
+}
+.window_skin_a .window_alertBtn{
+	width: 100px;
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	margin-left: -50px;
+	outline: none;
+    border: none;
+    line-height: 20px;
+    background: #eee;
+    cursor: pointer;
+}
+.window_skin_a .window_header{
+	background: #fef;
+	color: #fff;
+	text-align: center;
+	padding: 5px;
+	font-size: 20px;
+}
+
+.window_mask{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.1);
+}
