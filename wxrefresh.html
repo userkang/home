@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>wxRefresh</title>
+</head>
+
+<body>
+  <button id="refresh">刷新</button>
+</body>
+<script>
+  refresh.onclick = function () {
+    let str = ''
+    if (location.search.indexOf('t=') > -1) {
+      str = location.search.replace(/t=\d+/, 't=' + Date.now())
+    } else {
+      let sign = /\?/.test(location.href) ? '&' : '?'
+      str = location.search + sign + 't=' + Date.now()
+    }
+    location.search = str
+  }
+</script>
+
+</html>
