@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>text-gradient</title>
+  <style>
+    .text-gradient {
+      font-size: 50px;
+      font-weight: 800;
+      background: -webkit-linear-gradient(top, red, green);
+      background: linear-gradient(to bottom, red, green);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-gradient">
+    字体渐变
+  </div>
+</body>
+</html>
