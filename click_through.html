@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>click through</title>
+</head>
+<style>
+  html body {
+    height: 100%;
+  }
+
+  .mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .1)
+  }
+</style>
+
+<body>
+  <div class="mask" id="touch">
+  </div>
+  <button id="button">click</button>
+</body>
+<script>
+  touch.addEventListener('touchstart', function() {
+    touch.style.display = 'none'
+  })
+
+  button.addEventListener('click', function() {
+    alert('click')
+  })
+</script>
+</html>
