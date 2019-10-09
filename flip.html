@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>flip</title>
+  <style>
+    .container {
+      perspective: 1000;
+      transform-style: preserve-3d;
+    }
+
+    .container,
+    .front,
+    .back {
+      width: 200px;
+      height: 150px;
+    }
+
+    .flip {
+      position: relative;
+      transition: 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .front,
+    .back {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      backface-visibility: hidden;
+    }
+
+    .front {
+      z-index: 2;
+      background: red;
+    }
+
+    .back {
+      transform: rotateY(-180deg);
+      background: gold;
+    }
+
+    .container:hover .flip {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="flip">
+      <div class="front">I am front</div>
+      <div class="back">I am back</div>
+    </div>
+  </div>
+</body>
+
+</html>
