@@ -1,0 +1,10 @@
+<svg width="1000" height="1000" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="Gradient2" x1="1" x2="0" y1="1" y2="0">
+      <stop offset="0%" stop-color="red" />
+      <stop offset="100%" stop-color="chartreuse" />
+    </linearGradient>
+  </defs>
+  <path id="svg_1" d="m205.50001,272.08398l84.49999,-178.99999l84.49999,178.99999l-168.99999,0z" stroke-width="1.5"
+    stroke="url(#Gradient2)" fill="transparent" />
+</svg>

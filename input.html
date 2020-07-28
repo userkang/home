@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iframe</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <form enctype="multipart/form-data" id="spawn_form" method="post" role="form">
+    {{spawner_options_form | safe}}
+    <br>
+    <input id="submitId" type="submit" value="Spawn" class="btn btn-jupyter form-control">
+  </form>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const submitId = document.getElementById('submitId')
+    submitId.addEventListener('click', function () {
+      submitId.disabled = true
+    })
+  })
+
+</script>
+
+</html>
