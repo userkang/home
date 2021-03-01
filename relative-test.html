@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>relative</title>
+  <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .container {
+      height: 100%;
+      width: 200px;
+      background: red;
+    }
+    .test-block {
+      height: 100px;
+      width: 100%;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      background: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="test-block"></div>
+  </div>
+</body>
+</html>
