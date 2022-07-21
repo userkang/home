@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>2048</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <!-- 引入jquery -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <!-- 标题分数 -->
+  <header>
+    <p class="scores">得分:<span id="score">0</span></p>
+  </header>
+  <!-- 游戏页面 -->
+  <div class="game">
+    <div class="gride-cell" id="gride1-1"></div>
+    <div class="gride-cell" id="gride1-2"></div>
+    <div class="gride-cell" id="gride1-3"></div>
+    <div class="gride-cell" id="gride1-4"></div>
+    <div class="gride-cell" id="gride2-1"></div>
+    <div class="gride-cell" id="gride2-2"></div>
+    <div class="gride-cell" id="gride2-3"></div>
+    <div class="gride-cell" id="gride2-4"></div>
+    <div class="gride-cell" id="gride3-1"></div>
+    <div class="gride-cell" id="gride3-2"></div>
+    <div class="gride-cell" id="gride3-3"></div>
+    <div class="gride-cell" id="gride3-4"></div>
+    <div class="gride-cell" id="gride4-1"></div>
+    <div class="gride-cell" id="gride4-2"></div>
+    <div class="gride-cell" id="gride4-3"></div>
+    <div class="gride-cell" id="gride4-4"></div>
+  </div>
+</body>
+<script type="text/javascript">
+  //开始游戏
+  gridGenerate()
+  touch()
+  scoreNumber()
+
+
+
+  //计算总分
+  function scoreNumber() {
+    var score = 0 //总分
+    for (var i = 1; i < 5; i++) {
+      for (var e = 1; e < 5; e++) {
+        score = score + Number($(`#gride${i}-${e}`).text())
+      }
+    }
+    $('#score').html(score)
+  }
+
+  //生成方块函数
+  function gridGenerate() {
+    //随机给空白方块生成2,4
+    //1.先定义一个赋值数组
+    var array = [2, 4]
+    //2.根据Math.random()生成随机整数的方法根据获取array的随机索引生成需要的赋值
+    var value = array[Math.floor(Math.random() * array.length)]
+    //3.先判断当前为空的方块行和位置
+    var blockArray = [] // 方块行数组
+    var blockAllArray = [] // 全部方块数据
+    //循环为空的行方块
+    for (var i = 1; i < 5; i++) {
+      //循环行内为空的方块
+      var nullArray = []
+      for (var e = 1; e < 5; e++) {
+        //为空的方块所在的行内位置数组
+        //如果为空把其索引添加到行内数组中
+        if ($(`#gride${i}-${e}`).text() === '') {
+          nullArray.push(e)
+        }
+      }
+      //如果为行内方块不为空添加到行数组中
+      if (nullArray.length !== 0) {
+        blockAllArray.push(nullArray)
+        blockArray.push(i)
+      }
+    }
+    if (blockAllArray.length === 0) {
+      alert('游戏失败，请重新开始游戏！')
+      return
+    }
+    //4.开始给空的方块赋值
+
+    // 先随机行方块
+    var blockIndex = Math.floor(Math.random() * blockArray.length)
+    var blockValue = blockArray[blockIndex]
+    // 再随机行内方块
+    var blockAllValue = blockAllArray[blockIndex][Math.floor(Math.random() * blockAllArray[blockIndex].length)]
+
+    //5.开始给方块赋值
+    $(`#gride${blockValue}-${blockAllValue}`).html(value)
+  }
+
+  // 上滑事件从下面添加的上面
+  function up() {
+    //防止元素下方为空循环3次
+    for (var w = 0; w < 3; w++) {
+      //循环1-4列
+      for (var i = 4; i > 0; i--) {
+        //循环1-4列的元素相加
+        for (var e = 5; e > 1; e--) {
+          if ($(`#gride${e - 1}-${i}`).text() === '') {
+            $(`#gride${e - 1}-${i}`).html($(`#gride${e}-${i}`).text())
+            $(`#gride${e}-${i}`).html('')
+
+          } else if ($(`#gride${e}-${i}`).text() === $(`#gride${e - 1}-${i}`).text()) {
+            $(`#gride${e - 1}-${i}`).html(Number($(`#gride${e}-${i}`).text()) + Number($(`#gride${e - 1}-${i}`).text()))
+            $(`#gride${e}-${i}`).html('')
+          }
+        }
+      }
+    }
+
+    gridGenerate()
+    scoreNumber()
+  }
+  // 下滑事件
+  function down() {
+    //防止元素下方为空循环3次
+    for (var w = 0; w < 3; w++) {
+      //循环1-4列
+      for (var i = 1; i < 5; i++) {
+        //循环1-4列的元素相加
+        for (var e = 1; e < 4; e++) {
+          if ($(`#gride${e + 1}-${i}`).text() === '') {
+            $(`#gride${e + 1}-${i}`).html($(`#gride${e}-${i}`).text())
+            $(`#gride${e}-${i}`).html('')
+          } else if ($(`#gride${e}-${i}`).text() === $(`#gride${e + 1}-${i}`).text()) {
+            $(`#gride${e + 1}-${i}`).html(Number($(`#gride${e}-${i}`).text()) + Number($(`#gride${e + 1}-${i}`).text()))
+            $(`#gride${e}-${i}`).html('')
+          }
+        }
+      }
+    }
+
+    gridGenerate()
+    scoreNumber()
+  }
+  // 左滑事件
+  function left() {
+    //防止元素下方为空循环3次
+    for (var w = 0; w < 3; w++) {
+      //循环1-4列
+      for (var i = 4; i > 0; i--) {
+        //循环1-4列的元素相加
+        for (var e = 5; e > 1; e--) {
+          if ($(`#gride${i}-${e - 1}`).text() === '') {
+            $(`#gride${i}-${e - 1}`).html($(`#gride${i}-${e}`).text())
+            $(`#gride${i}-${e}`).html('')
+          } else if ($(`#gride${i}-${e}`).text() === $(`#gride${i}-${e - 1}`).text()) {
+            $(`#gride${i}-${e - 1}`).html(Number($(`#gride${i}-${e}`).text()) + Number($(`#gride${i}-${e - 1}`).text()))
+            $(`#gride${i}-${e}`).html('')
+          }
+        }
+      }
+    }
+    gridGenerate()
+    scoreNumber()
+  }
+  // 右滑事件
+  function right() {
+    //防止元素下方为空循环3次
+    for (var w = 0; w < 3; w++) {
+      //循环1-4列
+      for (var i = 1; i < 5; i++) {
+        //循环1-4列的元素相加
+        for (var e = 1; e < 4; e++) {
+          if ($(`#gride${i}-${e + 1}`).text() === '') {
+            $(`#gride${i}-${e + 1}`).html($(`#gride${i}-${e}`).text())
+            $(`#gride${i}-${e}`).html('')
+          } else if ($(`#gride${i}-${e}`).text() === $(`#gride${i}-${e + 1}`).text()) {
+            $(`#gride${i}-${e + 1}`).html(Number($(`#gride${i}-${e + 1}`).text()) + Number($(`#gride${i}-${e + 1}`).text()))
+            $(`#gride${i}-${e}`).html('')
+          }
+        }
+      }
+    }
+    gridGenerate()
+    scoreNumber()
+  }
+  // 判断滑动方向
+
+  // 2.根据触摸事件判断用户滑动的方向
+  // touchstart	触摸开始，
+  // touchmove	接触点改变，滑动时	
+  // touchend	触摸结束，手指离开屏幕时	
+  // touchcancel	触摸被取消，当系统停止跟踪触摸的时候触发
+  //触摸事件的返回值
+  // clientX：触摸目标在视口中的x坐标。
+  // clientY：触摸目标在视口中的y坐标。
+  // identifier：标识触摸的唯一ID。
+  // pageX：触摸目标在页面中的x坐标。
+  // pageY：触摸目标在页面中的y坐标。
+  // screenX：触摸目标在屏幕中的x坐标。
+  // screenY：触摸目标在屏幕中的y坐标。
+  // target：触摸的DOM节点目标。
+
+  function touch() { //触摸事件
+    //定义全局坐标变量
+    var startX, startY, chendX, chendY;
+    //手指触摸屏幕时触发事件
+    $('body').on('touchstart', function (even) {
+      startX = even.originalEvent.changedTouches[0].clientX //X轴
+      startY = even.originalEvent.changedTouches[0].clientY //Y轴
+    });
+
+    //手指离开屏幕时触发
+    $('body').on('touchend', function () {
+      chendX = event.changedTouches[0].pageX - startX
+      chendY = event.changedTouches[0].pageY - startY
+      if (Math.abs(chendX) > Math.abs(chendY)) { //认定为水平方向滑动
+        if (chendX > 30) { //向右
+          right()
+        } else if (chendX < -30) { //向左
+          left()
+        }
+      } else { //认定为垂直方向滑动
+        if (chendY > 30) { //向下
+          down()
+        } else if (chendY < -30) { //向上
+          up()
+        }
+      }
+    })
+  }
+  //触摸事件
+  touch()
+</script>
+
+<script>
+    //rem适应
+    (function (win, lib) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var devicePixelRatio = win.devicePixelRatio;
+      var dpr = 1;
+      var scale = 1;
+
+      // 设置vierPort
+      function setViewport() {
+        dpr = 1;
+        win.devicePixelRatioValue = dpr;
+        scale = 1 / dpr;
+        var metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute(
+          'content',
+          'initial-scale=' +
+          scale +
+          ', maximum-scale=' +
+          scale +
+          ', minimum-scale=' +
+          scale +
+          ', user-scalable=no'
+        );
+        if (docEl.firstElementChild) {
+          docEl.firstElementChild.appendChild(metaEl);
+        } else {
+          var wrap = doc.createElement('div');
+          wrap.appendChild(metaEl);
+          doc.write(wrap.innerHTML);
+        }
+      }
+
+      setViewport();
+      var newBase = 100; // 把页面划分为100等分
+
+      // 设置Rem
+      function setRem() {
+        var visualView = Math.min(
+          docEl.getBoundingClientRect().width,
+          lib.maxWidth
+        );
+        newBase = (100 * visualView) / lib.desinWidth;
+        docEl.style.fontSize = newBase + 'px';
+      }
+
+      var tid;
+      lib.desinWidth = 640;
+      lib.baseFont = 18;
+      lib.maxWidth = 540;
+      lib.init = function () {
+        win.addEventListener(
+          'resize',
+          function () {
+            clearTimeout(tid);
+            tid = setTimeout(setRem, 300);
+          },
+          false
+        );
+        win.addEventListener(
+          'pageshow',
+          function (e) {
+            if (e.persisted) {
+              clearTimeout(tid);
+              tid = setTimeout(setRem, 300);
+            }
+          },
+          false
+        );
+        if (doc.readyState === 'complete') {
+          doc.body.style.fontSize = lib.baseFont * dpr + 'px';
+        } else {
+          doc.addEventListener(
+            'DOMContentLoaded',
+            function (e) {
+              doc.body.style.fontSize = lib.baseFont * dpr + 'px';
+            },
+            false
+          );
+        }
+        setRem();
+        docEl.setAttribute('data-dpr', dpr);
+      };
+    })(window, window['adaptive'] || (window['adaptive'] = {}));
+  window['adaptive'].desinWidth = 750;
+  window['adaptive'].baseFont = 12;
+  window['adaptive'].maxWidth = 540;
+  window['adaptive'].init();
+</script>
+<style>
+  html {
+    background-color: #ccc0b3;
+  }
+
+  input {
+    background: none;
+    outline: none;
+    border: none;
+  }
+
+  /* 标题分数 */
+  header {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 0.25rem;
+    color: #fff;
+  }
+
+  .scores {
+    font-size: 0.38rem;
+  }
+
+  h2 {
+    margin-top: 1.5rem;
+  }
+
+  header p {
+    font-size: 0.32rem;
+    font-family: arial;
+  }
+
+  header input {
+    display: block;
+    margin: 0.5rem auto;
+    width: 2rem;
+    font-size: 0.32rem;
+    background-color: #8f7a66;
+    font-family: Arial;
+    color: white;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    text-decoration: none;
+  }
+
+  /* 游戏页面布局 */
+  .game {
+    width: 6.2rem;
+    height: 6.2rem;
+    padding: 0.2rem;
+    margin: 0.5rem auto;
+    background-color: #bbada0;
+    border-radius: 0.1rem;
+    position: relative;
+    margin-top: 0.35rem;
+    vertical-align: middle;
+  }
+
+  .gride-cell {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 0.12rem;
+    background-color: #d9822b;
+    position: relative;
+    float: left;
+    margin: 0.125rem;
+    line-height: 1.3rem;
+    text-align: center;
+    color: #fff;
+    font-size: 0.48rem;
+  }
+</style>
+
+</html>
